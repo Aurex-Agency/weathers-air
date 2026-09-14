@@ -1,0 +1,10 @@
+{
+  "name": "Weathers Air Conditioning",
+  "short_name": "Weathers",
+  "description": "HVAC, plumbing & electrical service in Columbus, MS.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0A2342",
+  "theme_color": "#0A2342",
+  "icons": [{ "src": "/favicon.png", "sizes": "500x212", "type": "image/png" }]
+}
