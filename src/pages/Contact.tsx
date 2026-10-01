@@ -184,7 +184,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
-                      Email Address
+                      Email Address (for a confirmation)
                     </label>
                     <input
                       id="email"
