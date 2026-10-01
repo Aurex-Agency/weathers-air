@@ -74,3 +74,11 @@ The office send must be accepted first. A separate receipt then goes to the vali
 The endpoint returns `confirmation: sent | unavailable | not_requested`; sent means accepted by Resend, not verified inbox delivery. If the customer send fails, the accepted office request remains successful and a `website_confirmation_failed` log records only a hashed request reference. Each send has its own idempotency key for retries in the existing ten-minute window. There is no durable retry queue; monitor Resend and Vercel logs for failed confirmations. The two provider timeouts total 12 seconds, inside the client's 15-second request timeout under normal overhead. Keep the endpoint firewall rate limit in place because user-supplied email addresses are not ownership-verified.
 
 Before release, verify the sending domain and test both messages in real Gmail/Outlook/mobile clients. Local browser previews validate layout, not mailbox delivery or every email client's rendering.
+
+## Google Analytics 4
+
+The Google tag for `G-SPW5VJH2GF` is installed once in `index.html`; prerendering retains it in all page documents. It is not reinjected on React navigation. GA4 owns page views; do not add a second manual route-based page-view sender.
+
+In the GA4 web data stream, confirm **Enhanced measurement → Page views → Advanced settings → Page changes based on browser history events** is enabled so React Router navigation is measured, as described in [Google’s SPA guide](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications). This account setting and receipt in Realtime/DebugView cannot be verified from the build alone. After deployment, check a direct page load and an internal navigation in Tag Assistant/DebugView for one page view each.
+
+No custom conversion events or form values are sent by this change. Do not treat automatically measured form interactions as confirmed leads. The supplied tag runs wherever this build is hosted, including previews; use GA4 data filters or a separate measurement setup when testing to keep production reporting clean.
