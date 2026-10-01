@@ -33,7 +33,7 @@ const services = [
   { icon: Home, title: "Residential HVAC", desc: "Complete heating & cooling solutions for your home comfort.", link: servicePath("residential") },
   { icon: Building2, title: "Commercial HVAC", desc: "Reliable HVAC systems for businesses of all sizes.", link: servicePath("commercial") },
   { icon: Wind, title: "Duct Cleaning", desc: "Professional air duct cleaning for healthier indoor air.", link: servicePath("cleaning") },
-  { icon: Shield, title: "Duct Sealing", desc: "Seal leaks and boost your system's efficiency up to 35%.", link: servicePath("sealing") },
+  { icon: Shield, title: "Duct Sealing", desc: "Seal leaks and improve airflow and reduce wasted heating and cooling.", link: servicePath("sealing") },
   { icon: Wrench, title: "Plumbing Services", desc: "Expert plumbing repairs and installations.", link: servicePath("plumbing") },
   { icon: Zap, title: "Electrical Services", desc: "Licensed electricians for safe, efficient solutions.", link: servicePath("electrical") },
 ];
@@ -65,7 +65,7 @@ const stats = [
   { num: BUSINESS.yearsInBusiness, suffix: "+", label: "Years" },
   { num: 500, suffix: "+", label: "Customers Served" },
   { num: 3, suffix: "", label: "States Licensed" },
-  { num: 24, suffix: "/7", label: "Emergency Service" },
+  { num: "Call", suffix: "", label: "For After-Hours Service" },
 ];
 
 const Stars = ({ size = 16 }: { size?: number }) => (
@@ -82,7 +82,7 @@ const Index = () => {
   return (
     <div>
       <Seo
-        title={`${BUSINESS.name} | HVAC, Plumbing & Electrical in Columbus, MS`}
+        title="HVAC Services in Columbus, MS | Weathers Air Conditioning"
         description={BUSINESS.description}
         path="/"
         jsonLd={[localBusinessSchema(), faqSchema(faqs)]}
@@ -95,15 +95,15 @@ const Index = () => {
           alt=""
           width={1920}
           height={1280}
-          fetchPriority="high"
+          {...{ fetchpriority: "high" }}
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover"
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
         <div className="hero-particles" aria-hidden="true" />
-        {!reduceMotion && (
-          <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        {(
+          <div className="absolute inset-0 overflow-hidden motion-reduce:hidden" aria-hidden="true">
             {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
@@ -122,7 +122,7 @@ const Index = () => {
         )}
         <div className="relative z-10 container mx-auto px-4 text-center py-20">
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 30 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
@@ -131,19 +131,20 @@ const Index = () => {
               {BUSINESS.award}
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-primary-foreground mb-6 leading-[1.1] tracking-tight">
-              Whatever the Weather
+              AC &amp; Heating Services
               <br />
-              <span className="text-sky">Call Weathers!</span>
+              <span className="text-sky">in Columbus, MS</span>
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/70 max-w-2xl mx-auto mb-10 text-balance">
-              Columbus, MS's most trusted HVAC, Plumbing & Electrical experts for over {BUSINESS.yearsInBusiness} years.
+              Based in Columbus and serving Mississippi, Alabama and Tennessee. Call Weathers for heating, cooling, plumbing and electrical service for your home or business.
             </p>
+            <Link to="/service-areas" className="inline-block text-sky underline underline-offset-4 mb-6">Explore service in your town →</Link>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/contact"
                 className="w-full sm:w-auto bg-amber hover:bg-amber-light text-primary font-bold px-8 py-4 rounded-xl text-lg transition-colors animate-pulse-amber"
               >
-                Schedule Service Today
+                Request Service
               </Link>
               <a
                 href={BUSINESS.phone.href}
@@ -244,7 +245,7 @@ const Index = () => {
             {stats.map((s) => (
               <div key={s.label} className="glass-light rounded-xl p-6 text-center">
                 <dd className="text-3xl md:text-4xl font-black text-navy">
-                  <CountUp end={s.num} suffix={s.suffix} />
+                  {typeof s.num === "number" ? <CountUp end={s.num} suffix={s.suffix} /> : s.num}
                 </dd>
                 <dt className="text-muted-foreground text-sm mt-1">{s.label}</dt>
               </div>
@@ -266,7 +267,7 @@ const Index = () => {
               <a href={BUSINESS.phone.href} className="font-bold underline underline-offset-4">
                 {BUSINESS.phone.display}
               </a>{" "}
-              or send a message and we'll respond fast.
+              to discuss availability. For non-emergency requests, you can also send a message.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
@@ -398,11 +399,11 @@ const Index = () => {
             </h2>
             <p className="text-primary-foreground/70 leading-relaxed max-w-3xl mx-auto mb-5">
               A trusted HVAC contractor serving residential, commercial, institutional, and government clients across the
-              region for over 48 years. We specialize in heating, ventilation, air conditioning, refrigeration, preventative
+              region. We specialize in heating, ventilation, air conditioning, refrigeration, preventative
               maintenance, equipment replacement, and multi-family residential HVAC services.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {["48+ Years in Business", "TVA Preferred Vendor", "CMMC Level I", "SAM Registered"].map((b) => (
+              {["Experienced HVAC Team", "TVA Preferred Vendor", "CMMC Level I", "SAM Registered"].map((b) => (
                 <span
                   key={b}
                   className="inline-flex items-center gap-1.5 bg-amber/15 text-amber border border-amber/30 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider"

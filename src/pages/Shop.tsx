@@ -60,7 +60,7 @@ const Shop = () => {
   return (
     <div>
       <Seo
-        title="Shop Filters & Supplies"
+        title="Shop Air Filters & HVAC Supplies"
         description="Order replacement air filters and HVAC supplies online from Weathers Air Conditioning in Columbus, MS, delivered straight to your door."
         path="/shop"
       />
@@ -82,6 +82,7 @@ const Shop = () => {
 
       <section className="py-12 md:py-20 bg-background min-h-[60vh]">
         <div className="container mx-auto px-4">
+          <p className="text-sm text-muted-foreground mb-6">The catalog may take a moment to load. If it does not appear, call <a className="underline" href={BUSINESS.phone.href}>{BUSINESS.phone.display}</a> for help ordering.</p>
           {/* Contractor Commerce renders the storefront into this element. */}
           <div id="concom-navigator" navigator-key="m4lqCBqM1hNpcGKw"></div>
         </div>

@@ -1,0 +1,154 @@
+[
+  {
+    "priority": "P0",
+    "title": "Preview contact form discards leads",
+    "evidence": "Deployed bundle <code>index-loEUXYym.js</code>: submit handler is <code>i.preventDefault(),r(!0)</code>; this changes the thank-you state without sending data.",
+    "fix": "Deploy the newer form implementation, configure a real endpoint, and verify receipt in the actual monitored inbox/CRM. Confirm failure handling.",
+    "owner": "Developer + office",
+    "acceptance": "A clearly marked authorized test request reaches the office with all fields; failed requests never claim receipt."
+  },
+  {
+    "priority": "P0",
+    "title": "Preview differs from repository",
+    "evidence": "Preview lacks the repository\u2019s Seo component output, FAQ, labeled controls, and functional submission helper.",
+    "fix": "Identify the hosting project/build source and deploy the audited commit plus launch fixes. Record the deployed commit.",
+    "owner": "Developer",
+    "acceptance": "Production metadata and behavior match the intended build, including all deep routes."
+  },
+  {
+    "priority": "P0",
+    "title": "Production domain not ready",
+    "evidence": "HTTPS requests to apex and www failed TLS negotiation; HTTP apex returned 200 without HTTPS redirection during this audit.",
+    "fix": "Attach both hostnames, provision valid TLS, choose apex HTTPS canonical, redirect HTTP and www. Recheck from a second network.",
+    "owner": "Hosting owner",
+    "acceptance": "All production routes load with valid HTTPS; alternate hosts redirect once to final URLs."
+  },
+  {
+    "priority": "P0",
+    "title": "Domain migration not implemented/verified",
+    "evidence": "Old links use /about-us/ and /contact-us/; new app uses /about and /contact. No migration rules in provided vercel.json.",
+    "fix": "Implement page-to-page permanent redirects at old hosting/edge. Preserve old-domain registration, TLS and email DNS.",
+    "owner": "Hosting + SEO",
+    "acceptance": "Every mapped old URL reaches its relevant new destination; no redirect loops or mass homepage redirects."
+  },
+  {
+    "priority": "P1",
+    "title": "Production URL values still point at staging",
+    "evidence": "BUSINESS.siteUrl defaults to preview; local render confirms preview canonicals. robots.txt, sitemap.xml and raw index.html image URLs are separately hardcoded.",
+    "fix": "Set VITE_SITE_URL=https://weathersair.com and rebuild; also update/generate static sitemap, robots and raw social URLs. README claim that sitemap automatically reads BUSINESS is inaccurate.",
+    "owner": "Developer",
+    "acceptance": "No staging URLs in production canonicals, schema IDs, sitemap, robots sitemap reference or share images."
+  },
+  {
+    "priority": "P1",
+    "title": "Preview SEO basics missing",
+    "evidence": "Same generic title across marketing pages; description describes the website itself; rendered checks show no canonical/JSON-LD on Home, Services, Reviews and About. Preview sitemap returns 404.",
+    "fix": "Deploy and verify route metadata/schema; publish valid XML sitemap and truthful social preview.",
+    "owner": "Developer",
+    "acceptance": "Unique relevant page titles/descriptions; correct canonicals; parseable schema; sitemap 200 XML."
+  },
+  {
+    "priority": "P1",
+    "title": "Shop widget covers mobile call action",
+    "evidence": "At 390 \u00d7 844 the floating SHOP tab overlaps part of Call Now; widget target is old-domain /shop/#/.",
+    "fix": "Disable sidebar widget outside Shop or position above the call bar with safe-area spacing. Update Contractor Commerce domain and outbound widget URL.",
+    "owner": "Developer + vendor",
+    "acceptance": "Both call and schedule controls are fully visible/tappable at 320\u2013430px, including with vendor script loaded."
+  },
+  {
+    "priority": "P1",
+    "title": "Newsletter is nonfunctional/misleading",
+    "evidence": "Preview Subscribe is a button without handler. Repository mailto fallback sets done and says \u201cYou\u2019re on the list\u201d before any subscription occurs.",
+    "fix": "Remove newsletter for launch unless a real subscription service is configured; show success only after enrollment is confirmed.",
+    "owner": "Developer",
+    "acceptance": "No false success and no silent dead-end control."
+  },
+  {
+    "priority": "P1",
+    "title": "Form validation incomplete in repository",
+    "evidence": "Contact uses noValidate but handler only checks phone length. Empty name, malformed email, or email preference without an email can proceed.",
+    "fix": "Validate name, phone, optional email syntax, and email when selected; validate server-side, rate-limit and handle provider-specific response semantics.",
+    "owner": "Developer",
+    "acceptance": "Invalid fields stop submission with associated errors; valid request reaches the office."
+  },
+  {
+    "priority": "P1",
+    "title": "Privacy page is dropped",
+    "evidence": "Old navigation includes /privacy-policy/; no equivalent route/footer link in new app. Forms and vendor scripts collect/process data.",
+    "fix": "Publish an accurate privacy notice reflecting actual form, analytics and commerce vendors; map old policy URL to it.",
+    "owner": "Owner + developer",
+    "acceptance": "Accessible footer/form policy link with accurate data-handling information."
+  },
+  {
+    "priority": "P1",
+    "title": "Single services URL limits intent coverage",
+    "evidence": "Seven services are fragments of /services, with short commercial/plumbing/electrical sections. Fragments do not provide separate service landing pages.",
+    "fix": "Build substantive AC repair, heating repair, installation, maintenance and commercial pages, followed by verified plumbing/electrical/duct services.",
+    "owner": "SEO + owner",
+    "acceptance": "Each distinct service has useful unique content, internal links, metadata and a clear conversion path."
+  },
+  {
+    "priority": "P1",
+    "title": "History and service claims need reconciliation",
+    "evidence": "40 years/since the 1980s conflicts with 48+ years. Copy alternates after-hours and 24/7. Hero service card promises up to 35% efficiency gain; service text instead describes air loss.",
+    "fix": "Confirm founding year and dispatch hours with owner; replace unsupported numbers and distinguish leakage from savings. Verify awards, credentials, customer counts and free-estimate terms.",
+    "owner": "Owner + copywriter",
+    "acceptance": "One verified factual record drives visible copy and schema."
+  },
+  {
+    "priority": "P1",
+    "title": "Duct-cleaning claims overstate evidence",
+    "evidence": "Service copy says dirty ducts are \u201cmost likely\u201d behind comfort problems and suggests health/energy benefits broadly.",
+    "fix": "Use inspection-led explanations with limits; avoid implying guaranteed health improvements or savings. EPA guidance is linked below.",
+    "owner": "Owner + copywriter",
+    "acceptance": "Claims supported by evidence; cleaning distinguished from sealing and full-system maintenance."
+  },
+  {
+    "priority": "P2",
+    "title": "Missing pages return 200",
+    "evidence": "Preview /audit-missing-page-20260930 returns 200; repository also rewrites every path to index.html.",
+    "fix": "Serve real 404 status for unknown routes while retaining direct access to valid app routes. Client noindex is only a fallback.",
+    "owner": "Developer",
+    "acceptance": "Unknown URL returns 404 with helpful navigation; valid deep links remain 200."
+  },
+  {
+    "priority": "P2",
+    "title": "HTML depends on JavaScript",
+    "evidence": "Raw index.html has an empty root; SEO component runs in useEffect. Google can render JS, but other crawlers and share previews may not.",
+    "fix": "Prerender or server-render marketing routes and route metadata. Preserve interactive React behavior.",
+    "owner": "Developer",
+    "acceptance": "curl/view-source contains meaningful page-specific copy, title, canonical and schema."
+  },
+  {
+    "priority": "P2",
+    "title": "Social destinations need verification",
+    "evidence": "Preview social icons use #. Repository Facebook/Yelp URLs differ from the existing site\u2019s linked profiles.",
+    "fix": "Verify owned profiles before publishing; use one sameAs/NAP source. Old Facebook is /Weathersheatingandcooling; old Yelp is /weathers-heating-and-cooling-columbus.",
+    "owner": "Owner + developer",
+    "acceptance": "Each icon reaches the correct business; accessible names describe destinations."
+  },
+  {
+    "priority": "P2",
+    "title": "Shop loading and metadata need handling",
+    "evidence": "Catalog initially blank, later loaded; vendor changes title to \u201cOnline Shop - Products\u201d and uses hash routes.",
+    "fix": "Provide visible loading/error/fallback states; verify final-domain authorization, product/cart flow and title behavior. Treat service SEO as separate from hash-based product SEO.",
+    "owner": "Developer + vendor",
+    "acceptance": "No unexplained blank store; catalog, product and cart work on production; no accidental orders in testing."
+  },
+  {
+    "priority": "P2",
+    "title": "Lead attribution unverified",
+    "evidence": "No first-party GA4/GTM or lead-event implementation found in repository. Preview includes platform PostHog; that does not establish client conversion tracking.",
+    "fix": "Configure owner-controlled analytics and measure successful leads, phone clicks and booked jobs.",
+    "owner": "SEO + developer",
+    "acceptance": "Debug/test events verified; no duplicate SPA page views or PII in analytics."
+  },
+  {
+    "priority": "P2",
+    "title": "Dependency advisories",
+    "evidence": "npm audit: 7 affected packages, 2 high and 5 moderate, including Vite and React Router.",
+    "fix": "Review advisory applicability and upgrade safely; keep dev servers private. Do not treat build-tool advisories as proof of exploitable static production code.",
+    "owner": "Developer",
+    "acceptance": "Updated lockfile and passing checks with applicability documented."
+  }
+]

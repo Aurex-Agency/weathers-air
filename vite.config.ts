@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   server: {
     host: "::",
     port: 8080,
@@ -17,11 +17,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks: isSsrBuild ? undefined : {
           react: ["react", "react-dom", "react-router-dom"],
           motion: ["framer-motion"],
         },
       },
     },
   },
-});
+}));

@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { SeoContext } from "@/lib/seo-context";
 import { BUSINESS } from "@/lib/business";
 
 interface SeoProps {
@@ -40,17 +41,20 @@ function upsertLink(rel: string, href: string) {
  * Sets title, description, canonical, Open Graph / Twitter tags and JSON-LD.
  */
 const Seo = ({ title, description, path, image = "/og-image.jpg", jsonLd, noIndex = false }: SeoProps) => {
+  const collect = useContext(SeoContext);
+  collect?.({ title, description, path, image, jsonLd, noIndex });
   useEffect(() => {
+    document.querySelectorAll(`script[${DATA_ATTR}]`).forEach((script) => script.remove());
     const fullTitle = title.includes(BUSINESS.name) ? title : `${title}${SUFFIX}`;
     const url = `${BUSINESS.siteUrl}${path}`;
     const imageUrl = image.startsWith("http") ? image : `${BUSINESS.siteUrl}${image}`;
 
     document.title = fullTitle;
     upsertMeta("name", "description", description);
-    upsertMeta("name", "robots", noIndex ? "noindex, nofollow" : "index, follow");
+    upsertMeta("name", "robots", noIndex ? "noindex, follow" : "index, follow");
     upsertLink("canonical", url);
 
-    upsertMeta("property", "og:type", "website");
+    upsertMeta("property", "og:type", path.startsWith("/blog/") ? "article" : "website");
     upsertMeta("property", "og:site_name", BUSINESS.name);
     upsertMeta("property", "og:title", fullTitle);
     upsertMeta("property", "og:description", description);

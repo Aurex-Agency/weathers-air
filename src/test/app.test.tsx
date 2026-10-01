@@ -14,7 +14,7 @@ const renderAt = (path: string) =>
 describe("app shell", () => {
   it("renders the home page with the brand headline and call links", () => {
     renderAt("/");
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/Whatever the Weather/i);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/AC & Heating Services/i);
     const telLinks = document.querySelectorAll(`a[href="${BUSINESS.phone.href}"]`);
     expect(telLinks.length).toBeGreaterThan(3);
   });
@@ -29,7 +29,7 @@ describe("app shell", () => {
   it("renders the primary navigation with every page", () => {
     renderAt("/");
     const nav = screen.getByRole("navigation", { name: "Primary" });
-    for (const label of ["Home", "Services", "Shop", "Reviews", "About Us", "Contact Us"]) {
+    for (const label of ["Home", "Services", "Service Areas", "Shop", "Reviews", "Blog", "About Us", "Contact Us"]) {
       expect(within(nav).getByRole("link", { name: label })).toBeInTheDocument();
     }
   });

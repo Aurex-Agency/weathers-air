@@ -1,10 +1,12 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { Phone, MapPin, Clock, Zap, Mail, Loader2, CheckCircle2, AlertCircle, Navigation } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import AnimatedSection from "@/components/AnimatedSection";
 import Seo from "@/components/Seo";
 import SocialLinks from "@/components/SocialLinks";
 import { BUSINESS, MAP_EMBED_URL, MAP_DIRECTIONS_URL } from "@/lib/business";
+import { locations } from "@/data/locations";
 import { breadcrumbSchema } from "@/lib/schema";
 import { submitForm, FormNotConfiguredError, buildMailto, isValidPhone } from "@/lib/submit";
 
@@ -36,7 +38,14 @@ const inputClass =
   "w-full bg-card border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-sky focus:ring-2 focus:ring-sky/30 transition-colors aria-[invalid=true]:border-destructive";
 
 const Contact = () => {
+  const [searchParams] = useSearchParams();
+  const selectedLocation = locations.find(l => `${l.city}, ${l.state}` === searchParams.get("location"));
   const [formData, setFormData] = useState<FormState>(initialForm);
+  useEffect(() => {
+    if (selectedLocation) setFormData(current => current.message ? current : {
+      ...current, message: `Service requested in ${selectedLocation.city}, ${selectedLocation.state}.\nStreet address: \nHow can we help? `,
+    });
+  }, [selectedLocation]);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -55,6 +64,11 @@ const Contact = () => {
       return;
     }
 
+    if (!formData.name.trim() || (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) || (formData.contactMethod === "email" && !formData.email.trim())) {
+      setErrorMsg("Please enter your name and a valid email address if you prefer an email reply.");
+      setStatus("error");
+      return;
+    }
     setStatus("sending");
     setErrorMsg("");
     const { company: _honeypot, ...fields } = formData;
@@ -84,7 +98,7 @@ const Contact = () => {
   return (
     <div>
       <Seo
-        title="Contact Us | Schedule Service"
+        title="Request HVAC Service in Columbus, MS"
         description={`Schedule HVAC, plumbing or electrical service in Columbus, MS. Call ${BUSINESS.phone.display} or send a request online. ${BUSINESS.hours.display}, emergency service after hours.`}
         path="/contact"
         jsonLd={breadcrumbSchema([
@@ -124,7 +138,7 @@ const Contact = () => {
                   </h3>
                   <p className="text-muted-foreground">
                     {status === "done"
-                      ? "We've received your request and will follow up within 1 business day. For emergencies, please call directly."
+                      ? "Your request has been sent to our office. We will follow up within 1 business day. For emergencies, please call directly."
                       : `Your email app should open with your request pre-filled. If it doesn't, email us at ${BUSINESS.email} or call ${BUSINESS.phone.display}.`}
                   </p>
                 </div>
@@ -258,6 +272,7 @@ const Contact = () => {
                   </button>
                   <p className="text-xs text-muted-foreground text-center">
                     We'll follow up within 1 business day. For emergencies, please call directly.
+                    {" "}<Link to="/privacy-policy" className="underline">Privacy policy</Link>
                   </p>
                 </form>
               )}

@@ -11,6 +11,8 @@ const quickLinks = [
   { label: "Services", path: "/services" },
   { label: "Shop", path: "/shop", hard: true },
   { label: "Reviews", path: "/reviews" },
+  { label: "Blog", path: "/blog" },
+  { label: "Service Areas", path: "/service-areas" },
   { label: "About Us", path: "/about" },
   { label: "Contact Us", path: "/contact" },
 ];
@@ -32,7 +34,7 @@ const Newsletter = () => {
     } catch (err) {
       if (err instanceof FormNotConfiguredError) {
         window.location.href = buildMailto(BUSINESS.email, "Newsletter signup", { Email: email });
-        setStatus("done");
+        setStatus("error");
       } else {
         setStatus("error");
       }
@@ -42,7 +44,7 @@ const Newsletter = () => {
   if (status === "done") {
     return (
       <p className="flex items-center gap-2 text-sm text-sky mb-6" role="status">
-        <CheckCircle2 size={16} aria-hidden="true" /> Thanks! You're on the list.
+        <CheckCircle2 size={16} aria-hidden="true" /> Thanks! Your signup request has been sent.
       </p>
     );
   }
@@ -101,7 +103,7 @@ const Footer = () => {
             />
             <p className="text-sm uppercase tracking-[0.2em] text-sky/70 font-semibold mb-4">{BUSINESS.tagline}</p>
             <p className="text-sm leading-relaxed text-primary-foreground/60">
-              Columbus, MS's most trusted HVAC, Plumbing & Electrical company for over {BUSINESS.yearsInBusiness} years.
+              Based in Columbus, MS. HVAC, plumbing and electrical service in Mississippi, Alabama and Tennessee.
             </p>
           </div>
 
@@ -157,6 +159,7 @@ const Footer = () => {
           <div>
             <h2 className="text-primary-foreground font-bold mb-4">Stay Updated</h2>
             <Newsletter />
+            <p className="text-xs mb-4">Signup requests are sent to our office. <Link to="/privacy-policy" className="underline">Privacy policy</Link></p>
             <SocialLinks
               size={16}
               linkClassName="w-9 h-9 bg-primary-foreground/5 hover:bg-sky/20 hover:text-sky"

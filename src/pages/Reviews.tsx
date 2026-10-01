@@ -59,7 +59,7 @@ const Reviews = () => {
   return (
     <div>
       <Seo
-        title="Customer Reviews"
+        title="Columbus, MS Customer Reviews"
         description={`Rated ${BUSINESS.reviews.rating} stars on Google from ${BUSINESS.reviews.count}+ reviews. See what Columbus, MS homeowners and businesses say about Weathers Air Conditioning.`}
         path="/reviews"
         jsonLd={breadcrumbSchema([
@@ -82,8 +82,8 @@ const Reviews = () => {
       <section className="py-20 bg-gray-section">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-12">
-            <h2 className="text-3xl font-black text-foreground mb-2">Most Recent Reviews</h2>
-            <p className="text-muted-foreground text-sm">Verified Google reviews from this year</p>
+            <h2 className="text-3xl font-black text-foreground mb-2">Selected Customer Reviews</h2>
+            <p className="text-muted-foreground text-sm">Customer feedback from Google</p>
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recentReviews.map((r, i) => (
@@ -99,7 +99,7 @@ const Reviews = () => {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center mb-10">
-            <h2 className="text-2xl font-black text-foreground mb-2">From Last Year</h2>
+            <h2 className="text-2xl font-black text-foreground mb-2">More Customer Experiences</h2>
             <p className="text-muted-foreground text-sm">A look back at 2025</p>
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">

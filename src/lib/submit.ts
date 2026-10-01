@@ -1,11 +1,6 @@
-/**
- * Form submission helper.
- *
- * Posts JSON to the endpoint configured in `VITE_FORM_ENDPOINT` (works with
- * Formspree, Web3Forms, Basin, a Netlify/Vercel function, or anything that
- * accepts a JSON POST). If no endpoint is configured, the caller gets a
- * `FormNotConfiguredError` so it can fall back to a pre-filled email.
- */
+/** Posts a request to the same-origin Vercel/Resend endpoint. Only a JSON
+ * response with success:true is considered accepted; HTML fallbacks cannot
+ * accidentally claim that a request was sent. */
 
 export type FormKind = "contact" | "newsletter";
 
@@ -22,21 +17,35 @@ export class FormNotConfiguredError extends Error {
 }
 
 /** Read at call time so the value can be changed in tests and previews. */
-export const getFormEndpoint = () => (import.meta.env.VITE_FORM_ENDPOINT as string | undefined)?.trim() || "";
+export const getFormEndpoint = () => (import.meta.env.VITE_FORM_ENDPOINT as string | undefined)?.trim() || "/api/contact";
 
 export async function submitForm(payload: SubmitPayload, endpoint: string = getFormEndpoint()): Promise<void> {
   if (!endpoint) throw new FormNotConfiguredError();
 
-  const res = await fetch(endpoint, {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  let res: Response;
+  try {
+  res = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
+    signal: controller.signal,
     body: JSON.stringify({
       ...payload,
       page: typeof window !== "undefined" ? window.location.href : undefined,
       submittedAt: new Date().toISOString(),
     }),
   });
+  } catch {
+    throw new Error("We could not confirm your request. Please try again or call us.");
+  } finally {
+    clearTimeout(timer);
+  }
 
+  if (res.ok) {
+    const result = await res.json().catch(() => null);
+    if (result?.success !== true) throw new Error("We could not confirm your request. Please call us.");
+  }
   if (!res.ok) {
     let detail = "";
     try {
@@ -58,7 +67,8 @@ export function buildMailto(to: string, subject: string, fields: Record<string, 
   return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-/** Loose US phone check: at least 10 digits. */
+/** US phone number: ten digits, optionally prefixed with country code 1. */
 export function isValidPhone(value: string): boolean {
-  return value.replace(/\D/g, "").length >= 10;
+  const digits = value.replace(/\D/g, "");
+  return digits.length === 10 || (digits.length === 11 && digits.startsWith("1"));
 }

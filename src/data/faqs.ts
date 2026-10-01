@@ -10,7 +10,7 @@ export const faqs: Faq[] = [
   {
     question: "What areas do you serve?",
     answer:
-      "We're based in Columbus, MS and proudly serve the Golden Triangle and surrounding communities. Weathers is fully licensed in Mississippi, Alabama and Tennessee.",
+      "We are based in Columbus, MS and work in Mississippi, Alabama and Tennessee. Our local service guides cover communities within roughly 60 miles of Columbus. Call with your exact address and service needs to confirm coverage and scheduling.",
   },
   {
     question: "Do you service all brands of heating and air conditioning equipment?",
@@ -30,7 +30,7 @@ export const faqs: Faq[] = [
   {
     question: "Can duct sealing really lower my energy bills?",
     answer:
-      "It can. Homes can lose up to 35% of conditioned air through unsealed ductwork. We test the airflow in your duct system and seal the leaks so your HVAC system runs more efficiently year-round.",
+      "It can. Leaking ducts can waste heated or cooled air. Savings depend on the condition of the ductwork and the home. We test the airflow in your duct system and seal the leaks so your HVAC system runs more efficiently year-round.",
   },
   {
     question: "What are your office hours?",

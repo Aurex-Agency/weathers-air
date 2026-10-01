@@ -118,7 +118,7 @@ const Services = () => {
   return (
     <div>
       <Seo
-        title="HVAC, Plumbing & Electrical Services"
+        title="HVAC, Plumbing & Electrical in Columbus, MS"
         description={`Residential and commercial HVAC installation and repair, air duct cleaning, whole-home duct sealing, preventive maintenance plans, plumbing and electrical services in Columbus, MS. Call ${BUSINESS.phone.display}.`}
         path="/services"
         jsonLd={breadcrumbSchema([
@@ -128,7 +128,7 @@ const Services = () => {
       />
       <PageHero
         headline="Our Services"
-        subheadline="Comprehensive HVAC, Plumbing & Electrical solutions for homes and businesses across Columbus, MS."
+        subheadline="HVAC, plumbing and electrical solutions from Columbus, MS, serving homes and businesses in Mississippi, Alabama and Tennessee."
       />
 
       {/* Sticky Section Nav */}
@@ -242,12 +242,10 @@ const Services = () => {
               <div>
                 <SectionHeading id="cleaning">Air Duct Cleaning</SectionHeading>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  Tired of seeing dust throughout your house? Is it hard for your system to keep your room at the right
-                  temp? It's most likely the air ducts causing the issue. When using your home's HVAC forced-air unit, it's
-                  necessary to have an efficient system of vents and ducts. When maintained properly, they will keep your
-                  HVAC system working as efficiently as it was designed. Clean ducts can keep you or your employees
-                  healthy, while saving you money and reducing your energy bills.
-                </p>
+                  Dust and uneven temperatures can have several causes. An inspection can help determine whether your
+                ductwork needs cleaning, repairs or sealing. We assess your system and explain the appropriate next step.
+                Duct cleaning removes accumulated debris; it does not fix air leaks or guarantee better health or lower bills.
+              </p>
                 <div className="bg-sky/5 border border-sky/20 rounded-xl p-5 mb-6 flex gap-3">
                   <Lightbulb size={20} className="text-amber shrink-0 mt-0.5" aria-hidden="true" />
                   <p className="text-foreground font-semibold text-sm">
@@ -268,8 +266,8 @@ const Services = () => {
           <AnimatedSection>
             <SectionHeading id="sealing">Whole Home Ductwork Sealing</SectionHeading>
             <div className="bg-amber/10 border border-amber/20 rounded-xl p-6 mb-6 text-center max-w-md">
-              <p className="text-3xl font-black text-amber">Up to 35%</p>
-              <p className="text-foreground font-medium text-sm mt-1">of your air may be lost through unsealed ductwork!</p>
+              <p className="text-3xl font-black text-amber">Find the leaks</p>
+              <p className="text-foreground font-medium text-sm mt-1">Leaking ductwork can waste conditioned air.</p>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
               Most homeowners know they should upgrade their home insulation. However, many aren't aware of the impact
@@ -278,7 +276,7 @@ const Services = () => {
               system can lower your energy bills and make your home more comfortable throughout the year.
             </p>
             <Link to="/contact" className={ctaClass}>
-              Get a Free Estimate
+              Request a Duct Sealing Estimate
             </Link>
           </AnimatedSection>
         </section>
@@ -394,7 +392,7 @@ const Services = () => {
               to="/contact"
               className="w-full sm:w-auto inline-block border-2 border-primary-foreground/30 text-primary-foreground hover:border-sky font-bold px-8 py-4 rounded-xl text-lg transition-colors"
             >
-              Schedule Online
+              Request Service
             </Link>
           </div>
         </div>
