@@ -33,7 +33,7 @@ describe("contact form", () => {
 
   it("submits the form and shows the thank-you state", async () => {
     vi.stubEnv("VITE_FORM_ENDPOINT", "https://example.test/f");
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("{}", { status: 200 }));
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response('{"success":true}', { status: 200 }));
     render(
       <MemoryRouter>
         <Contact />

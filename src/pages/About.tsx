@@ -29,7 +29,7 @@ const About = () => {
   return (
     <div>
       <Seo
-        title="About Us"
+        title="About Our Columbus, MS HVAC Company"
         description={`Family-owned and serving Columbus, MS and the Golden Triangle since the 1980s. Learn about Weathers Air Conditioning, the ${BUSINESS.award}.`}
         path="/about"
         jsonLd={breadcrumbSchema([
@@ -39,7 +39,7 @@ const About = () => {
       />
       <PageHero
         headline={`${BUSINESS.yearsInBusiness} Years. One Name. Weathers.`}
-        subheadline="Serving Columbus, MS and the Golden Triangle with pride since the 1980s."
+        subheadline="Based in Columbus, MS and serving Mississippi, Alabama and Tennessee."
       />
 
       {/* Our Story */}
@@ -143,7 +143,7 @@ const About = () => {
           <AnimatedSection>
             <MapPin size={40} className="text-sky mx-auto mb-4" aria-hidden="true" />
             <h2 className="text-2xl font-black text-foreground mb-4">Proudly Serving the Golden Triangle & Beyond</h2>
-            <p className="text-muted-foreground mb-4">Licensed in Mississippi, Alabama, and Tennessee.</p>
+            <p className="text-muted-foreground mb-4">Working in Mississippi, Alabama and Tennessee. Contact our Columbus office to confirm service at your address.</p>
             <p className="text-sm text-muted-foreground">{LICENSE_LINE}</p>
           </AnimatedSection>
           <div className="mt-10 pt-10 border-t border-border">
@@ -170,7 +170,7 @@ const About = () => {
                 to="/contact"
                 className="w-full sm:w-auto inline-block bg-amber hover:bg-amber-light text-primary font-bold px-8 py-4 rounded-xl text-lg transition-colors"
               >
-                Schedule Service Today
+                Request Service
               </Link>
               <a
                 href={BUSINESS.phone.href}

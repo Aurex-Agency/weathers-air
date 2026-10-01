@@ -16,6 +16,7 @@ interface NavItem {
 
 const navLinks: NavItem[] = [
   { label: "Home", path: "/" },
+  { label: "Service Areas", path: "/service-areas" },
   {
     label: "Services",
     path: "/services",
@@ -23,6 +24,7 @@ const navLinks: NavItem[] = [
   },
   { label: "Shop", path: "/shop", hard: true },
   { label: "Reviews", path: "/reviews" },
+  { label: "Blog", path: "/blog" },
   { label: "About Us", path: "/about" },
   { label: "Contact Us", path: "/contact" },
 ];
@@ -68,7 +70,7 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const desktopLinkClass = (path: string) =>
-    `px-3 py-2 text-sm font-medium transition-colors rounded-md ${
+    `px-2 py-2 text-sm font-medium transition-colors rounded-md ${
       isActive(path) ? "text-sky" : "text-primary-foreground/80 hover:text-sky"
     }`;
   const mobileLinkClass = (path: string) =>
@@ -94,7 +96,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
+        <nav className="hidden xl:flex items-center gap-1" aria-label="Primary">
           {navLinks.map((link) =>
             link.dropdown ? (
               <div
@@ -148,7 +150,7 @@ const Navbar = () => {
           )}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden xl:flex items-center gap-3">
           <a
             href={BUSINESS.phone.href}
             className="flex items-center gap-2 text-primary-foreground/90 text-sm font-medium hover:text-sky transition-colors"
@@ -169,7 +171,7 @@ const Navbar = () => {
           <SheetTrigger asChild>
             <button
               type="button"
-              className="lg:hidden text-primary-foreground p-2 -mr-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="xl:hidden text-primary-foreground p-2 -mr-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
             >
@@ -178,7 +180,7 @@ const Navbar = () => {
           </SheetTrigger>
           <SheetContent
             side="right"
-            className="bg-navy border-l border-sky/10 p-0 w-[85vw] sm:max-w-sm [&>button]:hidden"
+            className="bg-navy border-l border-sky/10 p-0 w-[85vw] sm:max-w-sm "
           >
             <SheetTitle className="sr-only">Site navigation</SheetTitle>
             <nav className="flex flex-col h-full px-6 py-8 gap-1 overflow-y-auto" aria-label="Mobile">
@@ -236,7 +238,7 @@ const Navbar = () => {
                   to="/contact"
                   className="flex items-center justify-center gap-2 border-2 border-primary-foreground/30 text-primary-foreground font-bold py-3 rounded-lg text-lg"
                 >
-                  Schedule Service
+                  Request Service
                 </Link>
               </div>
             </nav>

@@ -1,1 +1,2 @@
-/*    /index.html   200
+# Vercel is the production host. Static pages are generated at build time.
+# No catch-all SPA rewrite: unknown paths must return HTTP 404.

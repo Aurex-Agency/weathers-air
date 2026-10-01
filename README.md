@@ -1,95 +1,66 @@
-# Weathers Air Conditioning — Website
+# Weathers Air Conditioning
 
-Marketing site for **Weathers Air Conditioning**, Columbus, MS. HVAC, plumbing and electrical service for the Golden Triangle.
+Production domain: https://weathersair.com. React + Vite + TypeScript, hosted on Vercel.
 
-Live: https://weathers.aurexagency.com
-
-## Stack
-
-- [Vite](https://vitejs.dev) + [React 18](https://react.dev) + TypeScript
-- [Tailwind CSS](https://tailwindcss.com) with brand tokens in `src/index.css`
-- [React Router](https://reactrouter.com) (client-side routing, lazy-loaded pages)
-- [Framer Motion](https://www.framer.com/motion/) for scroll reveals (respects `prefers-reduced-motion`)
-- [Radix UI](https://www.radix-ui.com) primitives for the mobile drawer (shadcn-style components in `src/components/ui`)
-- [Vitest](https://vitest.dev) + Testing Library
-
-## Getting started
+## Local development and validation
 
 ```sh
-npm install
-cp .env.example .env   # optional, see Configuration
-npm run dev            # http://localhost:8080
+npm ci
+npm run dev
+npm run check
+npm run preview
 ```
 
-Other scripts:
+`npm run check` runs lint, TypeScript, unit/component/API tests, and the production build. Tests mock Resend; they do not send email.
 
-| Script              | What it does                                  |
-| ------------------- | --------------------------------------------- |
-| `npm run build`     | Production build to `dist/`                   |
-| `npm run preview`   | Serve the production build locally            |
-| `npm run lint`      | ESLint                                        |
-| `npm run typecheck` | TypeScript, no emit                           |
-| `npm test`          | Vitest (unit + component tests)               |
-| `npm run check`     | Lint, typecheck, test and build in one go     |
+## Crawlable output
 
-CI runs `npm run check` on every pull request (`.github/workflows/ci.yml`).
+`npm run build` builds the client, renders each route through `src/entry-server.tsx`, and generates page-specific HTML, metadata, JSON-LD, `sitemap.xml`, `robots.txt` and `404.html`. `scripts/check-static.mjs` validates titles, canonicals, H1s, schema, internal links, all five article routes and 12 town routes.
 
-## Configuration
+Add new routes to both `src/App.tsx` and the route inventory in `src/entry-server.tsx`. Blog routes are generated from `src/data/posts.ts`; location routes from `src/data/locations.ts`. Do not restore the catch-all SPA rewrite: Vercel serves the generated clean URLs and returns 404 for unknown paths. On non-Vercel hosts, configure clean URL resolution and preserve real 404 responses.
 
-Environment variables are read at build time (Vite `VITE_*` prefix). Set them in `.env` locally or in your host's project settings.
+The sitemap and robots file are generated from the build origin; do not edit them by hand. Static social metadata is generated for every page. Default origin is `https://weathersair.com`.
 
-| Variable             | Purpose                                                                                                                                                                     |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_FORM_ENDPOINT` | Where the contact form and footer newsletter POST their JSON. Works with [Formspree](https://formspree.io), [Web3Forms](https://web3forms.com), Basin, or your own function. **If unset, the form falls back to opening a pre-filled email** to the business address, so nothing is silently lost. |
-| `VITE_SITE_URL`      | Canonical origin (no trailing slash). Used for canonical tags, Open Graph URLs and schema.org markup. Defaults to `https://weathers.aurexagency.com`.                       |
+## Local service pages
 
-### Form payload
+The `/service-areas` hub links to 12 researched pages: Columbus, Starkville, West Point, Aberdeen, Amory, Caledonia, Macon and Louisville in Mississippi; Aliceville, Reform, Vernon and Fayette in Alabama. This first set follows the owner’s roughly 60-mile-radius scope from Columbus (geographic radius, not a driving-time or dispatch guarantee). Tennessee remains in the owner-confirmed three-state coverage copy; no Tennessee town pages are included in this radius.
 
-Both forms send `application/json`:
+Each record includes a distinct property/service angle, source URL, preparation checklist, FAQ and related towns. Local facts are drawn from municipal, state and regional sources; conditional HVAC advice is editorial guidance, not evidence of completed projects or affiliation with local institutions. Add owner-supplied job photographs, verified case studies and technician observations when available. Keep the one real Columbus business address; do not fabricate branches. Town CTAs and the mobile call bar preserve location in an editable contact message.
 
-```json
-{
-  "form": "contact",            // or "newsletter"
-  "subject": "Service request from Jane Doe (Plumbing)",
-  "name": "Jane Doe",
-  "phone": "6625551234",
-  "email": "jane@example.com",
-  "serviceType": "Plumbing",
-  "contactMethod": "phone",
-  "message": "…",
-  "page": "https://…/contact",
-  "submittedAt": "2026-09-14T15:04:05.000Z"
-}
-```
+## Resend service requests
 
-A hidden honeypot field (`company`) is dropped client-side; bots that fill it are ignored.
+`api/contact.ts` is a Vercel Node.js function using the Web Standard fetch handler. Both contact and newsletter-request forms POST to `/api/contact`.
 
-## Editing content
+- Sender: `Weathers Air Conditioning <support@team.weathersair.com>`
+- Recipient: `mary@weathersairconditioning.com` (fixed server-side)
+- Reply-To: the visitor's validated email, if supplied
+- Secret: `RESEND_API_KEY`, server only, configured in Vercel
+- Public build origin: `VITE_SITE_URL=https://weathersair.com`
+- Form path: `VITE_FORM_ENDPOINT=/api/contact`
+- Optional preview allowlist: `FORM_ALLOWED_ORIGINS`, comma-separated exact origins
 
-- **Business details** (phone, address, hours, licences, social profiles, review counts): `src/lib/business.ts`. Every page, the footer, the schema markup and the sitemap read from here.
-- **FAQ** (also emitted as `FAQPage` structured data): `src/data/faqs.ts`
-- **Reviews**: `src/pages/Reviews.tsx` and the three featured on `src/pages/Index.tsx`
-- **Service copy**: `src/pages/Services.tsx`
-- **Images**: `src/assets/*.webp` (imported, hashed by Vite). `public/` holds the favicon, `logo.png`, `og-image.jpg`, `robots.txt` and `sitemap.xml`.
+Never put the Resend key in a VITE variable, client code, Git or a report. Verify `team.weathersair.com` in Resend with its required DNS records. A sending domain does not automatically create an inbound support mailbox.
 
-If you add a page, register it in `src/App.tsx` and add it to `public/sitemap.xml`.
+The endpoint validates body size, email, name and phone; rejects other origins and honeypots; uses fixed destinations and an idempotency key; and times out provider requests. Origin checking is not bot authentication. Before production activation, apply a Vercel firewall rate limit to POST `/api/contact` (initial recommendation: 5 requests per IP per minute; tune for legitimate shared networks). Do not rely on per-instance memory counters in serverless functions.
 
-## SEO
+A successful API response means Resend accepted the notification, not that mailbox delivery is proven. Verify one authorized request end to end and check the Resend delivery event and Mary's inbox. Error states must preserve entered information. Newsletter submissions notify the office; they do not silently enroll someone in a marketing list.
 
-- Per-route `<title>`, description, canonical and Open Graph tags via `src/components/Seo.tsx`
-- `HVACBusiness` / `Plumber` / `Electrician` local business schema, `FAQPage` and `BreadcrumbList` JSON-LD (`src/lib/schema.ts`)
-- `public/sitemap.xml`, `public/robots.txt`, `public/site.webmanifest`
+`vite dev`/`vite preview` serve the frontend, not Vercel functions. Use `vercel dev` or a deployment with an explicitly allowed preview origin to test the HTTP endpoint; automated endpoint tests run locally without credentials.
 
-## Shop
+## Content
 
-`/shop` embeds the Contractor Commerce storefront. The plugin script is loaded in `index.html` and re-run when the shop route mounts (`src/pages/Shop.tsx`). Navigation links to `/shop` deliberately do a full page load so the third-party script always initialises cleanly.
+- Business details: `src/lib/business.ts`
+- Guides: `src/data/posts.ts` (five initial articles, sources and related service links)
+- FAQ: `src/data/faqs.ts`
+- SEO: `src/components/Seo.tsx` and build-time collector `src/lib/seo-context.ts`
+- Privacy notice: `src/pages/Privacy.tsx`; review against actual business practices and future analytics changes
 
-## Deploying
+Confirm founding year, availability, credentials, service geography, review counts and profile URLs with the owner. Do not invent job examples, price promises or technical reviewer credentials. Update article dates when published or substantively revised, not simply on every build.
 
-This is a static single-page app: build with `npm run build` and serve `dist/`. All routes must fall back to `index.html`:
+## Commerce
 
-- **Vercel**: `vercel.json` already contains the rewrite and long-lived cache headers for hashed assets.
-- **Netlify**: `public/_redirects` is included.
-- **Other hosts**: add an equivalent "serve `index.html` for unknown paths" rule.
+The Contractor Commerce plugin loads only on `/shop`, removing the global floating shop widget from landing pages. Confirm the vendor's destination domain and product/cart flows on `weathersair.com`. The shop provides a phone fallback while its catalog loads. Do not test with real purchases without authorization.
 
-Set `VITE_FORM_ENDPOINT` in the host's environment before building so the contact form submits somewhere real.
+## Migration
+
+`vercel.json` redirects legacy `/about-us` and `/contact-us` paths on this project. These rules do not configure the old domain's hosting. The old `weathersairconditioning.com` host still needs page-to-page permanent redirects, including privacy and shop routes; preserve shop fragments and old email DNS. See `audit/website-fix-plan.html` for the full implementation sequence and remaining account tasks.

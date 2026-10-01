@@ -11,7 +11,7 @@ export const BUSINESS = {
   legalName: "Weathers Air Conditioning, Inc.",
   tagline: "Whatever the Weather, Call Weathers!",
   description:
-    "Columbus, MS's most trusted HVAC, plumbing & electrical experts for over 40 years. Residential and commercial heating, cooling, duct cleaning, duct sealing, maintenance plans and 24/7 emergency service.",
+    "Weathers Air Conditioning is based in Columbus, MS and serves Mississippi, Alabama and Tennessee with residential and commercial HVAC, ductwork, maintenance, plumbing and electrical services.",
 
   phone: {
     display: "(662) 327-3784",
@@ -67,7 +67,7 @@ export const BUSINESS = {
   },
 
   /** Canonical origin of the deployed site (no trailing slash). */
-  siteUrl: (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") || "https://weathers.aurexagency.com",
+  siteUrl: (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") || "https://weathersair.com",
 } as const;
 
 export const LICENSE_LINE = BUSINESS.licenses.map((l) => `${l.state}: ${l.number}`).join(" | ");

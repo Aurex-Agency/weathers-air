@@ -4,6 +4,7 @@ import { cleanup } from "@testing-library/react";
 
 afterEach(() => cleanup());
 
+if (typeof window !== "undefined") {
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: (query: string) => ({
@@ -36,3 +37,5 @@ class MockIntersectionObserver {
 Object.defineProperty(window, "IntersectionObserver", { writable: true, value: MockIntersectionObserver });
 
 window.scrollTo = () => {};
+
+}

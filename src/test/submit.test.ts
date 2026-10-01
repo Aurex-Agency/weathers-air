@@ -9,7 +9,7 @@ describe("submitForm", () => {
   });
 
   it("POSTs JSON to the endpoint", async () => {
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("{}", { status: 200 }));
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response('{"success":true}', { status: 200 }));
     await submitForm({ form: "contact", name: "Jane" }, "https://example.test/f");
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [url, init] = fetchMock.mock.calls[0];
