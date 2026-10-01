@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
+import { officeEmail, confirmationEmail, type EmailPayload } from "./_lib/emails.js";
 const json = (status: number, message: string, extra = {}) => Response.json({ message, ...extra }, {status, headers:{"Cache-Control":"no-store"}});
-const emailValid = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && !/[\r\n]/.test(value);
+const emailValid = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && !/[\r\n,;<>"\\]/.test(value) && value.split("@").length === 2;
 export async function handleRequest(request: Request): Promise<Response> {
   if (request.method !== "POST") return new Response(null,{status:405,headers:{Allow:"POST"}});
   const origin = request.headers.get("origin");
@@ -27,17 +28,30 @@ export async function handleRequest(request: Request): Promise<Response> {
   }
   const apiKey=process.env.RESEND_API_KEY;
   if (!apiKey) return json(503,"Online requests are temporarily unavailable. Please call (662) 327-3784.");
-  const subject=form==="newsletter"?"Website update signup request":"New website service request";
-  const text=form==="newsletter"?`Website update signup request\nEmail: ${email}\n\nThis is an office notification, not automatic mailing-list enrollment.`:[`Name: ${name}`,`Phone: ${phone}`,`Email: ${email || "Not provided"}`,`Service: ${service || "Not selected"}`,`Preferred reply: ${preference}`,`Message:\n${message || "Not provided"}`].join("\n");
-  // Fixed recipients: callers cannot turn this endpoint into an arbitrary email relay.
-  const payload={from:"Weathers Air Conditioning <support@team.weathersair.com>",to:["mary@weathersairconditioning.com"],...(email?{reply_to:email}:{}),subject,text};
-  // Suppress duplicate clicks/retries for the same request within a ten-minute window.
-  const key=createHash("sha256").update(JSON.stringify(payload)+Math.floor(Date.now()/600000)).digest("hex");
+  const details = { form, name, phone, email, message, service, preference };
+  const payload = officeEmail(details);
+  // Separate stable keys keep office and customer sends independently idempotent on retries.
+  const key = createHash("sha256").update(JSON.stringify(payload) + Math.floor(Date.now() / 600000)).digest("hex");
+  async function send(payload: EmailPayload, purpose: string, timeout: number) {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json", "Idempotency-Key": `website-${purpose}-${key}` },
+      body: JSON.stringify(payload), signal: AbortSignal.timeout(timeout),
+    });
+    const result = await response.json();
+    return response.ok && typeof result?.id === "string";
+  }
   try {
-    const response=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:`Bearer ${apiKey}`,"Content-Type":"application/json","Idempotency-Key":`website-${key}`},body:JSON.stringify(payload),signal:AbortSignal.timeout(10000)});
-    const result=await response.json();
-    if (!response.ok || typeof result.id!=="string") return json(502,"We couldn't send your request. Please try again or call (662) 327-3784.");
-    return json(200,"Your request has been sent to our office.",{success:true});
+    if (!await send(payload, "office", 8000)) return json(502,"We couldn't send your request. Please try again or call (662) 327-3784.");
   } catch { return json(502,"We couldn't confirm your request. Please call (662) 327-3784."); }
+
+  // Never lose an accepted lead or prompt duplicate submissions when only the receipt fails.
+  let confirmation = "not_requested";
+  if (email) {
+    try { confirmation = await send(confirmationEmail(details), "confirmation", 4000) ? "sent" : "unavailable"; }
+    catch { confirmation = "unavailable"; }
+    if (confirmation === "unavailable") console.warn("website_confirmation_failed", { requestId: key });
+  }
+  return json(200, "Your request has been sent to our office.", { success: true, confirmation });
 }
 export default { fetch: handleRequest };

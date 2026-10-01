@@ -64,3 +64,13 @@ The Contractor Commerce plugin loads only on `/shop`, removing the global floati
 ## Migration
 
 `vercel.json` redirects legacy `/about-us` and `/contact-us` paths on this project. These rules do not configure the old domain's hosting. The old `weathersairconditioning.com` host still needs page-to-page permanent redirects, including privacy and shop routes; preserve shop fragments and old email DNS. See `audit/website-fix-plan.html` for the full implementation sequence and remaining account tasks.
+
+## Transactional email design
+
+`api/_lib/emails.ts` builds matching HTML and plain-text office notifications and customer confirmations. The HTML uses inline styles and presentation tables, with a navy/blue/amber brand palette and no external-image dependency. Submitted fields are HTML-escaped. Customer confirmations use fixed text and do not forward untrusted names, messages or links to the submitted address.
+
+The office send must be accepted first. A separate receipt then goes to the validated email, with Reply-To set to Mary. Phone-only service requests remain supported. Newsletter receipts acknowledge the request without claiming mailing-list enrollment. Office requests retain the customer Reply-To.
+
+The endpoint returns `confirmation: sent | unavailable | not_requested`; sent means accepted by Resend, not verified inbox delivery. If the customer send fails, the accepted office request remains successful and a `website_confirmation_failed` log records only a hashed request reference. Each send has its own idempotency key for retries in the existing ten-minute window. There is no durable retry queue; monitor Resend and Vercel logs for failed confirmations. The two provider timeouts total 12 seconds, inside the client's 15-second request timeout under normal overhead. Keep the endpoint firewall rate limit in place because user-supplied email addresses are not ownership-verified.
+
+Before release, verify the sending domain and test both messages in real Gmail/Outlook/mobile clients. Local browser previews validate layout, not mailbox delivery or every email client's rendering.
