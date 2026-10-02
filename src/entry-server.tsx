@@ -5,7 +5,7 @@ import { SeoContext, type SeoData } from "./lib/seo-context";
 import { posts } from "./data/posts";
 import { BUSINESS } from "./lib/business";
 import { locations } from "./data/locations";
-export const routes = ["/", "/services", "/contact", "/about", "/reviews", "/shop", "/blog", "/privacy-policy", "/service-areas", ...locations.map(l=>`/service-areas/${l.slug}`), ...posts.map(p=>`/blog/${p.slug}`)];
+export const routes = ["/", "/federal-hvac-contracting", "/services", "/contact", "/about", "/reviews", "/shop", "/blog", "/privacy-policy", "/service-areas", ...locations.map(l=>`/service-areas/${l.slug}`), ...posts.map(p=>`/blog/${p.slug}`)];
 export const origin = BUSINESS.siteUrl;
 export function render(path: string) {
   let seo: SeoData | undefined;

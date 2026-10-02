@@ -4,10 +4,8 @@ import { Home, Building2, Wind, Shield, Calendar, Wrench, Zap, Phone, Lightbulb 
 import PageHero from "@/components/PageHero";
 import AnimatedSection from "@/components/AnimatedSection";
 import Seo from "@/components/Seo";
-import imgResidential from "@/assets/service-residential.webp";
-import imgCommercial from "@/assets/service-commercial.webp";
+import ProjectPhoto from "@/components/ProjectPhoto";
 import imgDucting from "@/assets/service-ducting.webp";
-import imgPlumbing from "@/assets/service-plumbing.webp";
 import imgElectrical from "@/assets/service-electrical.webp";
 import { BUSINESS, SERVICE_LINKS, type ServiceId } from "@/lib/business";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -163,15 +161,7 @@ const Services = () => {
         <section id="residential" className={sectionClass} aria-label="Residential HVAC">
           <AnimatedSection>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-              <img
-                src={imgResidential}
-                alt="Cozy residential home with outdoor AC unit serviced by Weathers"
-                loading="lazy"
-                decoding="async"
-                width={1280}
-                height={896}
-                className={imgClass}
-              />
+              <ProjectPhoto id="ductless-mini-split" className="w-full aspect-[16/10] object-cover rounded-2xl shadow-lg" />
               <div>
                 <SectionHeading id="residential">Residential HVAC Service & Installation</SectionHeading>
                 <p className="text-muted-foreground leading-relaxed mb-6">
@@ -201,15 +191,7 @@ const Services = () => {
           <AnimatedSection>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               <div className="lg:order-2">
-                <img
-                  src={imgCommercial}
-                  alt="Commercial building rooftop with HVAC units"
-                  loading="lazy"
-                  decoding="async"
-                  width={1280}
-                  height={896}
-                  className={imgClass}
-                />
+                <ProjectPhoto id="rooftop-hvac-lift" className="w-full max-w-md mx-auto aspect-[3/4] object-cover rounded-2xl shadow-lg" />
               </div>
               <div className="lg:order-1">
                 <SectionHeading id="commercial">Commercial HVAC Services & Installation</SectionHeading>
@@ -221,6 +203,7 @@ const Services = () => {
                 <Link to="/contact" className={ctaClass}>
                   Get a Commercial Quote
                 </Link>
+                <p className="mt-5"><Link to="/federal-hvac-contracting" className="text-sky underline">Federal project? Explore our HVAC capabilities and CMMC Level 1 status →</Link></p>
               </div>
             </div>
           </AnimatedSection>
@@ -320,15 +303,7 @@ const Services = () => {
           <AnimatedSection>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               <div className="lg:order-2">
-                <img
-                  src={imgPlumbing}
-                  alt="Plumber repairing copper pipes"
-                  loading="lazy"
-                  decoding="async"
-                  width={1280}
-                  height={896}
-                  className={imgClass}
-                />
+                <ProjectPhoto id="tankless-water-heater" className="w-full max-w-sm mx-auto h-auto rounded-2xl shadow-lg" />
               </div>
               <div className="lg:order-1">
                 <SectionHeading id="plumbing">Plumbing Services</SectionHeading>

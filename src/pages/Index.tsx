@@ -24,7 +24,8 @@ import AnimatedSection from "@/components/AnimatedSection";
 import CountUp from "@/components/CountUp";
 import Seo from "@/components/Seo";
 import FaqSection from "@/components/FaqSection";
-import heroTech from "@/assets/hero-tech.webp";
+import ProjectPhoto from "@/components/ProjectPhoto";
+import ProjectGallery from "@/components/ProjectGallery";
 import { BUSINESS, servicePath } from "@/lib/business";
 import { localBusinessSchema, faqSchema } from "@/lib/schema";
 import { faqs } from "@/data/faqs";
@@ -90,16 +91,7 @@ const Index = () => {
 
       {/* HERO */}
       <section className="relative min-h-[100svh] flex items-center justify-center hero-gradient overflow-hidden pt-16 lg:pt-20">
-        <img
-          src={heroTech}
-          alt=""
-          width={1920}
-          height={1280}
-          {...{ fetchpriority: "high" }}
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-          aria-hidden="true"
-        />
+        <ProjectPhoto id="weathers-shop" priority decorative sizes="100vw" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
         <div className="hero-particles" aria-hidden="true" />
         {(
@@ -138,7 +130,7 @@ const Index = () => {
             <p className="text-lg md:text-xl text-primary-foreground/70 max-w-2xl mx-auto mb-10 text-balance">
               Based in Columbus and serving Mississippi, Alabama and Tennessee. Call Weathers for heating, cooling, plumbing and electrical service for your home or business.
             </p>
-            <Link to="/service-areas" className="inline-block text-sky underline underline-offset-4 mb-6">Explore service in your town →</Link>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-6"><Link to="/service-areas" className="text-sky underline underline-offset-4">Explore service in your town →</Link><Link to="/federal-hvac-contracting" className="text-sky underline underline-offset-4">Federal contractor · CMMC Level 1 (Self) →</Link></div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/contact"
@@ -215,6 +207,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <ProjectGallery preview />
 
       {/* WHY CHOOSE WEATHERS */}
       <section className="py-20 bg-gray-section" aria-labelledby="why-heading">
@@ -395,7 +389,7 @@ const Index = () => {
               Capability Statement
             </div>
             <h2 id="capability-heading" className="text-3xl md:text-4xl font-black text-primary-foreground mb-4">
-              Whatever the Weather, Call Weathers
+              Federal HVAC Contracting & Capabilities
             </h2>
             <p className="text-primary-foreground/70 leading-relaxed max-w-3xl mx-auto mb-5">
               A trusted HVAC contractor serving residential, commercial, institutional, and government clients across the
@@ -403,7 +397,7 @@ const Index = () => {
               maintenance, equipment replacement, and multi-family residential HVAC services.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {["Experienced HVAC Team", "TVA Preferred Vendor", "CMMC Level I", "SAM Registered"].map((b) => (
+              {["Experienced HVAC Team", "TVA Preferred Vendor", "CMMC Level 1 (Self)", "SAM Registered"].map((b) => (
                 <span
                   key={b}
                   className="inline-flex items-center gap-1.5 bg-amber/15 text-amber border border-amber/30 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider"
@@ -412,6 +406,8 @@ const Index = () => {
                 </span>
               ))}
             </div>
+            <p className="text-white/75 text-sm mt-5">CMMC Level 1 self-assessment and affirmation completed.</p>
+            <Link to="/federal-hvac-contracting" className="inline-block mt-6 bg-amber text-primary px-6 py-3 rounded-xl font-bold">Explore federal HVAC capabilities →</Link>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -549,7 +545,7 @@ const Index = () => {
                   <div className="w-10 h-10 rounded-lg bg-sky/20 flex items-center justify-center">
                     <BadgeCheck size={20} className="text-sky" aria-hidden="true" />
                   </div>
-                  <h3 className="text-primary-foreground font-bold text-lg uppercase tracking-wide">Certifications</h3>
+                  <h3 className="text-primary-foreground font-bold text-lg uppercase tracking-wide">Credentials & Registrations</h3>
                 </div>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-primary-foreground/80 text-sm">
                   {[
@@ -559,7 +555,7 @@ const Index = () => {
                     "City Multi Certified",
                     "EPA Lead Certified",
                     "OSHA Certified",
-                    "CMMC Level 1",
+                    "CMMC Level 1 (Self)",
                     "TVA Preferred Vendor",
                     "Master Mechanical License (MS, AL, TN)",
                   ].map((c) => (

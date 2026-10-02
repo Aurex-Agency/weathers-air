@@ -13,6 +13,7 @@ import { submitForm, FormNotConfiguredError, buildMailto, isValidPhone } from "@
 const serviceTypes = [
   "Residential HVAC",
   "Commercial HVAC",
+  "Federal HVAC / Government Project",
   "Duct Cleaning",
   "Duct Sealing",
   "Maintenance Plan",
@@ -40,12 +41,16 @@ const inputClass =
 const Contact = () => {
   const [searchParams] = useSearchParams();
   const selectedLocation = locations.find(l => `${l.city}, ${l.state}` === searchParams.get("location"));
+  const isFederalInquiry = searchParams.get("service") === "federal";
   const [formData, setFormData] = useState<FormState>(initialForm);
   useEffect(() => {
     if (selectedLocation) setFormData(current => current.message ? current : {
       ...current, message: `Service requested in ${selectedLocation.city}, ${selectedLocation.state}.\nStreet address: \nHow can we help? `,
     });
   }, [selectedLocation]);
+  useEffect(() => {
+    if (isFederalInquiry) setFormData(current => ({ ...current, serviceType: "Federal HVAC / Government Project" }));
+  }, [isFederalInquiry]);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -262,6 +267,7 @@ const Contact = () => {
                     </div>
                   )}
 
+                  {formData.serviceType === "Federal HVAC / Government Project" && <p className="rounded-lg bg-secondary p-4 text-sm text-muted-foreground" role="note">Public inquiries only. Do not submit FCI, CUI, access codes, security details or nonpublic facility drawings here or in replies to automated emails. Call our office to arrange appropriate document sharing.</p>}
                   <button
                     type="submit"
                     disabled={status === "sending"}

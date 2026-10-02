@@ -15,7 +15,7 @@ npm run preview
 
 ## Crawlable output
 
-`npm run build` builds the client, renders each route through `src/entry-server.tsx`, and generates page-specific HTML, metadata, JSON-LD, `sitemap.xml`, `robots.txt` and `404.html`. `scripts/check-static.mjs` validates titles, canonicals, H1s, schema, internal links, all five article routes and 12 town routes.
+`npm run build` builds the client, renders each route through `src/entry-server.tsx`, and generates page-specific HTML, metadata, JSON-LD, `sitemap.xml`, `robots.txt` and `404.html`. `scripts/check-static.mjs` validates titles, canonicals, H1s, schema, internal links, all six article routes and 12 town routes.
 
 Add new routes to both `src/App.tsx` and the route inventory in `src/entry-server.tsx`. Blog routes are generated from `src/data/posts.ts`; location routes from `src/data/locations.ts`. Do not restore the catch-all SPA rewrite: Vercel serves the generated clean URLs and returns 404 for unknown paths. On non-Vercel hosts, configure clean URL resolution and preserve real 404 responses.
 
@@ -50,7 +50,7 @@ A successful API response means Resend accepted the notification, not that mailb
 ## Content
 
 - Business details: `src/lib/business.ts`
-- Guides: `src/data/posts.ts` (five initial articles, sources and related service links)
+- Guides: `src/data/posts.ts` (six articles, sources and related service links)
 - FAQ: `src/data/faqs.ts`
 - SEO: `src/components/Seo.tsx` and build-time collector `src/lib/seo-context.ts`
 - Privacy notice: `src/pages/Privacy.tsx`; review against actual business practices and future analytics changes
@@ -82,3 +82,11 @@ The Google tag for `G-SPW5VJH2GF` is installed once in `index.html`; prerenderin
 In the GA4 web data stream, confirm **Enhanced measurement → Page views → Advanced settings → Page changes based on browser history events** is enabled so React Router navigation is measured, as described in [Google’s SPA guide](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications). This account setting and receipt in Realtime/DebugView cannot be verified from the build alone. After deployment, check a direct page load and an internal navigation in Tag Assistant/DebugView for one page view each.
 
 No custom conversion events or form values are sent by this change. Do not treat automatically measured form interactions as confirmed leads. The supplied tag runs wherever this build is hosted, including previews; use GA4 data filters or a separate measurement setup when testing to keep production reporting clean.
+
+## Federal contracting content
+
+`/federal-hvac-contracting` provides a dedicated capabilities page and links to the federal HVAC project-scoping guide. The client confirmed federal contractor status and completion of CMMC Level 1 self-assessment and affirmation on October 2, 2026. Wording uses “CMMC Level 1 (Self)”, does not imply third-party certification or Level 2 status, and does not invent assessment dates or system scope. Confirm current status before material future revisions.
+
+Federal inquiries use `/contact?service=federal`, preselect the service category and display a public-information-only notice. Do not collect FCI, CUI or nonpublic project documents through this marketing form or automated email replies.
+
+See `audit/federal-content-review.html` for Google's current guidance, sources, claim boundaries and a plan to add genuine owner/technician evidence. The new guide is planning guidance with an explicitly illustrative inquiry, not a completed-project case study. No approved federal project examples were supplied.

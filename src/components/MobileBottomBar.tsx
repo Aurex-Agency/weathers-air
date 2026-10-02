@@ -6,7 +6,8 @@ import { BUSINESS } from "@/lib/business";
 const MobileBottomBar = () => {
   const { pathname } = useLocation();
   const town = locations.find(item => pathname === `/service-areas/${item.slug}`);
-  const requestPath = town ? `/contact?location=${encodeURIComponent(`${town.city}, ${town.state}`)}` : "/contact";
+  const isFederal = pathname === "/federal-hvac-contracting" || pathname === "/blog/federal-hvac-project-scope-checklist";
+  const requestPath = isFederal ? "/contact?service=federal" : town ? `/contact?location=${encodeURIComponent(`${town.city}, ${town.state}`)}` : "/contact";
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-navy flex border-t border-border shadow-[0_-4px_16px_rgba(0,0,0,0.12)]"

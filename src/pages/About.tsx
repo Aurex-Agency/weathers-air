@@ -4,7 +4,8 @@ import PageHero from "@/components/PageHero";
 import AnimatedSection from "@/components/AnimatedSection";
 import CountUp from "@/components/CountUp";
 import Seo from "@/components/Seo";
-import teamTruck from "@/assets/team-truck.webp";
+import ProjectPhoto from "@/components/ProjectPhoto";
+import ProjectGallery from "@/components/ProjectGallery";
 import awardTrophy from "@/assets/award-trophy.webp";
 import { BUSINESS, LICENSE_LINE, servicePath } from "@/lib/business";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -47,15 +48,7 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection>
-              <img
-                src={teamTruck}
-                alt="Weathers Air Conditioning service truck and technician"
-                loading="lazy"
-                decoding="async"
-                width={1600}
-                height={1024}
-                className="w-full h-72 lg:h-96 object-cover rounded-2xl shadow-lg"
-              />
+              <ProjectPhoto id="ductwork-team" className="w-full max-w-md mx-auto aspect-[3/4] object-cover rounded-2xl shadow-lg" />
             </AnimatedSection>
             <AnimatedSection delay={0.2}>
               <h2 className="text-3xl font-black text-foreground mb-4">Built on Quality. Driven by Reliability.</h2>
@@ -71,6 +64,8 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      <ProjectGallery />
 
       {/* Stats */}
       <section className="py-16 bg-gray-section">
@@ -160,6 +155,7 @@ const About = () => {
         </div>
       </section>
 
+      <section className="container mx-auto px-4 py-12 max-w-3xl text-center"><h2 className="text-3xl font-bold mb-5">Federal contractor. CMMC Level 1 (Self).</h2><p className="text-muted-foreground leading-relaxed mb-6">Weathers has completed its CMMC Level 1 self-assessment and affirmation. Our Columbus office welcomes discussions with federal facility teams and prime contractors about HVAC service, maintenance and replacement.</p><Link to="/federal-hvac-contracting" className="text-sky underline font-semibold">Explore federal HVAC capabilities →</Link></section>
       {/* CTA */}
       <section className="py-16 bg-navy">
         <div className="container mx-auto px-4 text-center">
