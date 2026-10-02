@@ -9,6 +9,7 @@ import { submitForm, FormNotConfiguredError, buildMailto } from "@/lib/submit";
 const quickLinks = [
   { label: "Home", path: "/" },
   { label: "Services", path: "/services" },
+  { label: "Federal HVAC", path: "/federal-hvac-contracting" },
   { label: "Shop", path: "/shop", hard: true },
   { label: "Reviews", path: "/reviews" },
   { label: "Blog", path: "/blog" },

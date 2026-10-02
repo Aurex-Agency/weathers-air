@@ -20,7 +20,7 @@ const navLinks: NavItem[] = [
   {
     label: "Services",
     path: "/services",
-    dropdown: SERVICE_LINKS.map((s) => ({ label: s.label, path: servicePath(s.id) })),
+    dropdown: [...SERVICE_LINKS.map((s) => ({ label: s.label, path: servicePath(s.id) })), { label: "Federal HVAC Contracting", path: "/federal-hvac-contracting" }],
   },
   { label: "Shop", path: "/shop", hard: true },
   { label: "Reviews", path: "/reviews" },

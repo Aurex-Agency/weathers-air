@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 const sitemap=await readFile('dist/sitemap.xml','utf8');
 const urls=[...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]));
-assert.equal(urls.filter(u=>u.pathname.startsWith('/blog/')).length,5);
+assert.equal(urls.filter(u=>u.pathname.startsWith('/blog/')).length,6);
 assert.equal(urls.filter(u=>u.pathname.startsWith("/service-areas/")).length,12);
 const paths=new Set(urls.map(u=>u.pathname));
 const titles=new Set();
@@ -26,4 +26,4 @@ for (const url of urls) {
   if(url.pathname.startsWith('/blog/')) assert(html.includes('BlogPosting'));
 }
 assert((await readFile('dist/404.html','utf8')).includes('noindex'));
-console.log(`Verified ${urls.length} static pages: unique titles, canonical URLs, H1s, JSON-LD, internal links, five articles and 12 location pages.`);
+console.log(`Verified ${urls.length} static pages: unique titles, canonical URLs, H1s, JSON-LD, internal links, six articles and 12 location pages.`);

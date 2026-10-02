@@ -221,6 +221,7 @@ const Services = () => {
                 <Link to="/contact" className={ctaClass}>
                   Get a Commercial Quote
                 </Link>
+                <p className="mt-5"><Link to="/federal-hvac-contracting" className="text-sky underline">Federal project? Explore our HVAC capabilities and CMMC Level 1 status →</Link></p>
               </div>
             </div>
           </AnimatedSection>

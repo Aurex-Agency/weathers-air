@@ -160,6 +160,7 @@ const About = () => {
         </div>
       </section>
 
+      <section className="container mx-auto px-4 py-12 max-w-3xl text-center"><h2 className="text-3xl font-bold mb-5">Federal contractor. CMMC Level 1 (Self).</h2><p className="text-muted-foreground leading-relaxed mb-6">Weathers has completed its CMMC Level 1 self-assessment and affirmation. Our Columbus office welcomes discussions with federal facility teams and prime contractors about HVAC service, maintenance and replacement.</p><Link to="/federal-hvac-contracting" className="text-sky underline font-semibold">Explore federal HVAC capabilities →</Link></section>
       {/* CTA */}
       <section className="py-16 bg-navy">
         <div className="container mx-auto px-4 text-center">

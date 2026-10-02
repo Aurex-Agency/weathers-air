@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Privacy from "./pages/Privacy";
+import FederalHVAC from "./pages/FederalHVAC";
 import ServiceAreas from "./pages/ServiceAreas";
 import Location from "./pages/Location";
 
@@ -37,6 +38,7 @@ export const AppLayout = () => (
 
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/federal-hvac-contracting" element={<FederalHVAC />} />
           <Route path="/services" element={<Services />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/reviews" element={<Reviews />} />
