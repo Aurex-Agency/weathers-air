@@ -24,7 +24,8 @@ import AnimatedSection from "@/components/AnimatedSection";
 import CountUp from "@/components/CountUp";
 import Seo from "@/components/Seo";
 import FaqSection from "@/components/FaqSection";
-import heroTech from "@/assets/hero-tech.webp";
+import ProjectPhoto from "@/components/ProjectPhoto";
+import ProjectGallery from "@/components/ProjectGallery";
 import { BUSINESS, servicePath } from "@/lib/business";
 import { localBusinessSchema, faqSchema } from "@/lib/schema";
 import { faqs } from "@/data/faqs";
@@ -90,16 +91,7 @@ const Index = () => {
 
       {/* HERO */}
       <section className="relative min-h-[100svh] flex items-center justify-center hero-gradient overflow-hidden pt-16 lg:pt-20">
-        <img
-          src={heroTech}
-          alt=""
-          width={1920}
-          height={1280}
-          {...{ fetchpriority: "high" }}
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-          aria-hidden="true"
-        />
+        <ProjectPhoto id="weathers-shop" priority decorative sizes="100vw" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-navy/80" aria-hidden="true" />
         <div className="hero-particles" aria-hidden="true" />
         {(
@@ -215,6 +207,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <ProjectGallery preview />
 
       {/* WHY CHOOSE WEATHERS */}
       <section className="py-20 bg-gray-section" aria-labelledby="why-heading">
