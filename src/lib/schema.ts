@@ -16,7 +16,6 @@ export const localBusinessSchema = () => ({
   email: BUSINESS.email,
   image: abs("/og-image.jpg"),
   logo: abs("/logo.png"),
-  priceRange: "$$",
   address: {
     "@type": "PostalAddress",
     streetAddress: BUSINESS.address.street,

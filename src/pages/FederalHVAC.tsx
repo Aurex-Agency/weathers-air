@@ -1,3 +1,4 @@
+import { localBusinessSchema } from "@/lib/schema";
 import { Link } from "react-router-dom";
 import { Building2, ShieldCheck, ClipboardList, Phone } from "lucide-react";
 import Seo from "@/components/Seo";
@@ -15,7 +16,7 @@ export default function FederalHVAC() {
   return <>
     <Seo title="Federal HVAC Contractor | Weathers Air Conditioning" description="Weathers is a Columbus, MS federal HVAC contractor with completed CMMC Level 1 self-assessment and affirmation. Discuss service, maintenance and replacement." path={path} jsonLd={[
       breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Federal HVAC Contracting", path }]),
-      { "@context": "https://schema.org", "@type": "Service", "@id": `${BUSINESS.siteUrl}${path}#service`, name: "Federal HVAC contracting", serviceType: "HVAC service, maintenance, installation and replacement", url: `${BUSINESS.siteUrl}${path}`, provider: { "@type": "HVACBusiness", "@id": `${BUSINESS.siteUrl}/#business`, name: BUSINESS.name, url: BUSINESS.siteUrl, telephone: BUSINESS.phone.e164 }, areaServed: ["Mississippi", "Alabama", "Tennessee"].map(name => ({ "@type": "State", name })) },
+      { "@context": "https://schema.org", "@type": "Service", "@id": `${BUSINESS.siteUrl}${path}#service`, name: "Federal HVAC contracting", serviceType: "HVAC service, maintenance, installation and replacement", url: `${BUSINESS.siteUrl}${path}`, provider: localBusinessSchema(), areaServed: ["Mississippi", "Alabama", "Tennessee"].map(name => ({ "@type": "State", name })) },
     ]} />
     <PageHero eyebrow="Federal contractor · Based in Columbus, MS" headline="HVAC support for federal projects" subheadline="Service, preventive maintenance and equipment replacement for facility teams and prime contractors in Mississippi, Alabama and Tennessee.">
       <p className="inline-flex items-center justify-center gap-2 mt-6 rounded-xl border border-sky/40 bg-sky/10 px-5 py-3 font-semibold text-white"><ShieldCheck size={22} aria-hidden="true" />CMMC Level 1 (Self)</p>

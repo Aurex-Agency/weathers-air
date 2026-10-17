@@ -1,3 +1,4 @@
+import { localBusinessSchema } from "@/lib/schema";
 import { Link, useParams } from "react-router-dom";
 import { Phone, ArrowRight, CheckCircle2 } from "lucide-react";
 import PageHero from "@/components/PageHero";
@@ -18,7 +19,7 @@ export default function Location() {
   return <>
     <Seo title={`AC & Heating in ${place}`} description={`Need HVAC help in ${place}? ${location.focus}. Call Weathers for repair, replacement and maintenance availability.`} path={path} jsonLd={[
       breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Service Areas", path: "/service-areas" }, { name: place, path }]),
-      { "@context": "https://schema.org", "@type": "Service", "@id": `${BUSINESS.siteUrl}${path}#service`, name: `Heating and air conditioning in ${place}`, serviceType: "HVAC repair, replacement and maintenance", url: `${BUSINESS.siteUrl}${path}`, provider: { "@type": "HVACBusiness", "@id": `${BUSINESS.siteUrl}/#business`, name: BUSINESS.name, telephone: BUSINESS.phone.e164, url: BUSINESS.siteUrl }, areaServed: { "@type": "City", name: location.city, containedInPlace: { "@type": "State", name: location.state === "MS" ? "Mississippi" : "Alabama" } } },
+      { "@context": "https://schema.org", "@type": "Service", "@id": `${BUSINESS.siteUrl}${path}#service`, name: `Heating and air conditioning in ${place}`, serviceType: "HVAC repair, replacement and maintenance", url: `${BUSINESS.siteUrl}${path}`, provider: localBusinessSchema(), areaServed: { "@type": "City", name: location.city, containedInPlace: { "@type": "State", name: location.state === "MS" ? "Mississippi" : "Alabama" } } },
     ]} />
     <PageHero eyebrow={`${location.county} County · ${location.state === "MS" ? "Mississippi" : "Alabama"}`} headline={`AC & heating in ${place}`} subheadline={location.focus}>
       <div className="flex flex-col sm:flex-row justify-center gap-3 mt-7"><Link className="rounded-xl bg-amber px-6 py-3 font-bold text-primary" to={requestPath}>Request service in {location.city}</Link><a className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 px-6 py-3 font-semibold text-white" href={BUSINESS.phone.href}><Phone size={18} aria-hidden="true" />{BUSINESS.phone.display}</a></div>
