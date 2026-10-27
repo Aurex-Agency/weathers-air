@@ -1,3 +1,4 @@
+import { trackCallIntent } from "./lib/analytics";
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -5,6 +6,7 @@ import Footer from "@/components/Footer";
 import MobileBottomBar from "@/components/MobileBottomBar";
 import Index from "./pages/Index";
 
+import CoreService from "./pages/CoreService";
 import Services from "./pages/Services";
 import Shop from "./pages/Shop";
 import Reviews from "./pages/Reviews";
@@ -20,6 +22,14 @@ import Location from "./pages/Location";
 
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
+  useEffect(() => {
+    const handle = (event: MouseEvent) => {
+      const anchor = event.target instanceof Element ? event.target.closest("a") : null;
+      if (anchor?.getAttribute("href")?.startsWith("tel:")) trackCallIntent();
+    };
+    document.addEventListener("click", handle);
+    return () => document.removeEventListener("click", handle);
+  }, []);
   useEffect(() => {
     // Pages with a hash (e.g. /services#plumbing) handle their own scrolling.
     if (!hash) window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
@@ -40,6 +50,7 @@ export const AppLayout = () => (
           <Route path="/" element={<Index />} />
           <Route path="/federal-hvac-contracting" element={<FederalHVAC />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<CoreService />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/about" element={<About />} />

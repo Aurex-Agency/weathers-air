@@ -1,3 +1,4 @@
+import { seasonalPosts } from "./seasonal-posts";
 export interface BlogSection { heading: string; paragraphs: string[]; bullets?: string[]; }
 export interface BlogPostData {
   slug: string; title: string; description: string; category: string;
@@ -5,6 +6,7 @@ export interface BlogPostData {
   sections: BlogSection[]; sources: { title: string; url: string }[];
 }
 export const posts: BlogPostData[] = [
+  ...seasonalPosts,
   {
     slug: "federal-hvac-project-scope-checklist", title: "Before You Request a Federal HVAC Quote: A Scope Checklist",
     description: "Prepare an HVAC scope with equipment boundaries, access, shutdown windows and closeout needs. A practical checklist for facility teams and prime contractors.",
@@ -23,7 +25,7 @@ export const posts: BlogPostData[] = [
   {
     slug: "ac-not-cooling-columbus-ms", title: "AC Not Cooling? What Columbus Homeowners Can Check",
     description: "Check thermostat settings, filters and airflow before an AC service call. Learn what to tell your technician and when to stop troubleshooting.",
-    category: "AC repair", date: "2026-10-01", service: "/services#residential", serviceLabel: "Residential HVAC service",
+    category: "AC repair", date: "2026-10-01", service: "/services/ac-repair", serviceLabel: "Residential HVAC service",
     intro: "When your air conditioner runs but the house stays warm, the symptom alone does not tell you which part needs repair. Start with a few checks you can make without opening the equipment, then give your HVAC technician a clear description of what changed.",
     sections: [
       { heading: "Start with the thermostat", paragraphs: ["Check that the thermostat is set to cooling and that its target temperature is below the room temperature. Look for a schedule, vacation setting or recent change that could explain the behavior. If the display is blank, consult the thermostat instructions rather than assuming the air conditioner has failed.", "Write down the indoor reading, your setting and approximately when the problem began. Mention whether it followed an outage, a filter change or other work in the house. That timeline gives the technician useful context."] },
@@ -36,7 +38,7 @@ export const posts: BlogPostData[] = [
   {
     slug: "hvac-maintenance-checklist-columbus-ms", title: "A Seasonal HVAC Maintenance Checklist for Columbus Homes",
     description: "Plan heating and cooling maintenance, keep useful service records and compare maintenance agreements with this checklist for Columbus homeowners.",
-    category: "Maintenance", date: "2026-10-01", service: "/services#plans", serviceLabel: "HVAC maintenance plans",
+    category: "Maintenance", date: "2026-10-01", service: "/services/maintenance", serviceLabel: "HVAC maintenance plans",
     intro: "A useful maintenance routine has two parts: simple checks between visits and professional service appropriate to your equipment. Build the schedule around the system you own, its instructions and the work documented at your last visit.",
     sections: [
       { heading: "Keep one record for the whole system", paragraphs: ["Write down your indoor and outdoor model numbers, installation date if known, filter size and last service date. Keep repair invoices and any warranty documents together. If your home has more than one system, label the records by the area each system serves.", "Before a maintenance visit, make a short list of concerns. Include rooms that never feel comfortable, new sounds, thermostat problems and unexpected changes in operation. You do not need to diagnose them yourself; the goal is to make sure they are discussed."] },
@@ -49,7 +51,7 @@ export const posts: BlogPostData[] = [
   {
     slug: "repair-or-replace-air-conditioner", title: "Repair or Replace Your Air Conditioner? Questions to Ask",
     description: "Compare an AC repair with replacement using diagnosis, repair history, comfort, warranties and complete written estimates—not age alone.",
-    category: "System replacement", date: "2026-10-01", service: "/services#residential", serviceLabel: "HVAC repair and installation",
+    category: "System replacement", date: "2026-10-01", service: "/services/ac-repair", serviceLabel: "HVAC repair and installation",
     intro: "An expensive repair can make replacement worth considering, but there is no single rule that makes the decision for every home. Start with a documented diagnosis, then compare the repair and replacement options using the same household needs and budget.",
     sections: [
       { heading: "Understand the repair before comparing alternatives", paragraphs: ["Ask what failed, how the technician confirmed it and what the proposed repair will address. Find out whether other problems were discovered and whether the quote includes the entire recommended scope. A repair that restores operation may not resolve every comfort concern in the home.", "Keep the diagnosis separate from the sales proposal. Request the repair price, applicable parts and labor warranty, and any remaining uncertainty in writing. Those details give you a usable comparison if you also request a replacement estimate."] },

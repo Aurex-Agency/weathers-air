@@ -1,3 +1,4 @@
+import CoreServiceLinks from "@/components/CoreServiceLinks";
 import { useEffect, useState, useRef, useCallback, MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Building2, Wind, Shield, Calendar, Wrench, Zap, Phone, Lightbulb } from "lucide-react";
@@ -129,6 +130,7 @@ const Services = () => {
         subheadline="HVAC, plumbing and electrical solutions from Columbus, MS, serving homes and businesses in Mississippi, Alabama and Tennessee."
       />
 
+      <CoreServiceLinks/>
       {/* Sticky Section Nav */}
       <div ref={stickyNavRef} className="sticky top-16 lg:top-20 z-30 bg-background/95 backdrop-blur border-b border-border">
         <nav data-tab-strip className="container mx-auto px-4 overflow-x-auto scrollbar-hide" aria-label="Service sections">
