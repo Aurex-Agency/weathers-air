@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import { Phone, MapPin, Clock, Zap, Mail, Loader2, CheckCircle2, AlertCircle, Navigation } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -9,6 +9,8 @@ import { BUSINESS, MAP_EMBED_URL, MAP_DIRECTIONS_URL } from "@/lib/business";
 import { locations } from "@/data/locations";
 import { breadcrumbSchema } from "@/lib/schema";
 import { submitForm, FormNotConfiguredError, buildMailto, isValidPhone } from "@/lib/submit";
+
+import { trackLead } from "@/lib/analytics";
 
 const serviceTypes = [
   "Residential HVAC",
@@ -41,7 +43,8 @@ const inputClass =
 const Contact = () => {
   const [searchParams] = useSearchParams();
   const selectedLocation = locations.find(l => `${l.city}, ${l.state}` === searchParams.get("location"));
-  const isFederalInquiry = searchParams.get("service") === "federal";
+  const serviceSelection = new Map([["federal", "Federal HVAC / Government Project"], ["residential", "Residential HVAC"], ["maintenance", "Maintenance Plan"]]).get(searchParams.get("service") || "");
+  const sending = useRef(false);
   const [formData, setFormData] = useState<FormState>(initialForm);
   useEffect(() => {
     if (selectedLocation) setFormData(current => current.message ? current : {
@@ -49,8 +52,8 @@ const Contact = () => {
     });
   }, [selectedLocation]);
   useEffect(() => {
-    if (isFederalInquiry) setFormData(current => ({ ...current, serviceType: "Federal HVAC / Government Project" }));
-  }, [isFederalInquiry]);
+    if (serviceSelection) setFormData(current => ({ ...current, serviceType: serviceSelection }));
+  }, [serviceSelection]);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -63,6 +66,7 @@ const Contact = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (sending.current) return;
     if (formData.company) return; // bot filled the honeypot
     if (!isValidPhone(formData.phone)) {
       setPhoneError("Please enter a valid 10-digit phone number.");
@@ -74,6 +78,7 @@ const Contact = () => {
       setStatus("error");
       return;
     }
+    sending.current = true;
     setStatus("sending");
     setErrorMsg("");
     const { company: _honeypot, ...fields } = formData;
@@ -82,7 +87,9 @@ const Contact = () => {
     try {
       await submitForm({ form: "contact", subject, ...fields });
       setStatus("done");
+      trackLead();
     } catch (err) {
+      sending.current = false;
       if (err instanceof FormNotConfiguredError) {
         window.location.href = buildMailto(BUSINESS.email, subject, {
           Name: fields.name,

@@ -8,7 +8,13 @@ export default defineConfig(({ isSsrBuild }) => ({
     host: "::",
     port: 8080,
   },
-  plugins: [react()],
+  plugins: [react(), {
+    name: "production-analytics",
+    transformIndexHtml(html) {
+      const tag = process.env.VERCEL_ENV === "production" ? `<script async src="https://www.googletagmanager.com/gtag/js?id=G-SPW5VJH2GF"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SPW5VJH2GF');</script>` : "";
+      return html.replace("<!-- production-analytics -->", tag);
+    },
+  }],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

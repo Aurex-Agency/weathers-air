@@ -1,3 +1,4 @@
+import CoreServiceLinks from "@/components/CoreServiceLinks";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -33,7 +34,7 @@ import { faqs } from "@/data/faqs";
 const services = [
   { icon: Home, title: "Residential HVAC", desc: "Complete heating & cooling solutions for your home comfort.", link: servicePath("residential") },
   { icon: Building2, title: "Commercial HVAC", desc: "Reliable HVAC systems for businesses of all sizes.", link: servicePath("commercial") },
-  { icon: Wind, title: "Duct Cleaning", desc: "Professional air duct cleaning for healthier indoor air.", link: servicePath("cleaning") },
+  { icon: Wind, title: "Duct Cleaning", desc: "Assess and remove accumulated debris in ductwork.", link: servicePath("cleaning") },
   { icon: Shield, title: "Duct Sealing", desc: "Seal leaks and improve airflow and reduce wasted heating and cooling.", link: servicePath("sealing") },
   { icon: Wrench, title: "Plumbing Services", desc: "Expert plumbing repairs and installations.", link: servicePath("plumbing") },
   { icon: Zap, title: "Electrical Services", desc: "Licensed electricians for safe, efficient solutions.", link: servicePath("electrical") },
@@ -150,6 +151,7 @@ const Index = () => {
       </section>
 
       {/* TRUST BAR */}
+      <CoreServiceLinks/>
       <section className="bg-navy py-4 overflow-hidden" aria-label="Why customers trust Weathers">
         <ul className="hidden md:flex items-center justify-center gap-8 flex-wrap px-4">
           {trustItems.map((item) => (
