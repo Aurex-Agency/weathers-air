@@ -7,7 +7,6 @@ import Index from "./pages/Index";
 
 // Route-level code splitting: the home page ships in the main bundle, the rest load on demand.
 const Services = lazy(() => import("./pages/Services"));
-const Shop = lazy(() => import("./pages/Shop"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -38,7 +37,6 @@ export const AppLayout = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/shop" element={<Shop />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />

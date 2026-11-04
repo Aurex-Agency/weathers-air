@@ -29,7 +29,7 @@ describe("app shell", () => {
   it("renders the primary navigation with every page", () => {
     renderAt("/");
     const nav = screen.getByRole("navigation", { name: "Primary" });
-    for (const label of ["Home", "Services", "Shop", "Reviews", "About Us", "Contact Us"]) {
+    for (const label of ["Home", "Services", "Reviews", "About Us", "Contact Us"]) {
       expect(within(nav).getByRole("link", { name: label })).toBeInTheDocument();
     }
   });

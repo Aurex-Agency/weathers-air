@@ -80,10 +80,6 @@ If you add a page, register it in `src/App.tsx` and add it to `public/sitemap.xm
 - `HVACBusiness` / `Plumber` / `Electrician` local business schema, `FAQPage` and `BreadcrumbList` JSON-LD (`src/lib/schema.ts`)
 - `public/sitemap.xml`, `public/robots.txt`, `public/site.webmanifest`
 
-## Shop
-
-`/shop` embeds the Contractor Commerce storefront. The plugin script is loaded in `index.html` and re-run when the shop route mounts (`src/pages/Shop.tsx`). Navigation links to `/shop` deliberately do a full page load so the third-party script always initialises cleanly.
-
 ## Deploying
 
 This is a static single-page app: build with `npm run build` and serve `dist/`. All routes must fall back to `index.html`:

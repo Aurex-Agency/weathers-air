@@ -9,7 +9,6 @@ import { submitForm, FormNotConfiguredError, buildMailto } from "@/lib/submit";
 const quickLinks = [
   { label: "Home", path: "/" },
   { label: "Services", path: "/services" },
-  { label: "Shop", path: "/shop", hard: true },
   { label: "Reviews", path: "/reviews" },
   { label: "About Us", path: "/about" },
   { label: "Contact Us", path: "/contact" },
@@ -111,15 +110,9 @@ const Footer = () => {
             <ul className="flex flex-col gap-2">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  {link.hard ? (
-                    <a href={link.path} className="text-sm hover:text-sky transition-colors">
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link to={link.path} className="text-sm hover:text-sky transition-colors">
-                      {link.label}
-                    </Link>
-                  )}
+                  <Link to={link.path} className="text-sm hover:text-sky transition-colors">
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

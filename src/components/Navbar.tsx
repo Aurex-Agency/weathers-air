@@ -9,8 +9,6 @@ import { BUSINESS, SERVICE_LINKS, servicePath } from "@/lib/business";
 interface NavItem {
   label: string;
   path: string;
-  /** Forces a full page load (needed for the third-party shop plugin). */
-  hard?: boolean;
   dropdown?: { label: string; path: string }[];
 }
 
@@ -21,7 +19,6 @@ const navLinks: NavItem[] = [
     path: "/services",
     dropdown: SERVICE_LINKS.map((s) => ({ label: s.label, path: servicePath(s.id) })),
   },
-  { label: "Shop", path: "/shop", hard: true },
   { label: "Reviews", path: "/reviews" },
   { label: "About Us", path: "/about" },
   { label: "Contact Us", path: "/contact" },
@@ -136,10 +133,6 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-            ) : link.hard ? (
-              <a key={link.label} href={link.path} className={desktopLinkClass(link.path)}>
-                {link.label}
-              </a>
             ) : (
               <Link key={link.label} to={link.path} className={desktopLinkClass(link.path)}>
                 {link.label}
@@ -214,10 +207,6 @@ const Navbar = () => {
                       </div>
                     </CollapsibleContent>
                   </Collapsible>
-                ) : link.hard ? (
-                  <a key={link.label} href={link.path} className={mobileLinkClass(link.path)}>
-                    {link.label}
-                  </a>
                 ) : (
                   <Link key={link.label} to={link.path} className={mobileLinkClass(link.path)}>
                     {link.label}
