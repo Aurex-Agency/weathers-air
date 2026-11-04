@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback, MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Building2, Wind, Shield, Calendar, Wrench, Zap, Phone, Lightbulb } from "lucide-react";
+import { Home, Building2, Wind, Shield, Calendar, Wrench, Zap, Phone, Lightbulb, Filter } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import AnimatedSection from "@/components/AnimatedSection";
 import Seo from "@/components/Seo";
@@ -372,6 +372,39 @@ const Services = () => {
                 <Link to="/contact" className={ctaClass}>
                   Request Electrical Service
                 </Link>
+              </div>
+            </div>
+          </AnimatedSection>
+        </section>
+
+        {/* Filters & supplies: call to order */}
+        <section aria-labelledby="filters-heading">
+          <AnimatedSection>
+            <div className="relative overflow-hidden bg-navy rounded-2xl p-8 md:p-10 text-primary-foreground">
+              <div className="hero-particles" aria-hidden="true" />
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center">
+                <div className="flex flex-col sm:flex-row gap-5 items-start">
+                  <div className="w-14 h-14 rounded-xl bg-sky/20 flex items-center justify-center shrink-0">
+                    <Filter size={28} className="text-sky" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h2 id="filters-heading" className="text-2xl md:text-3xl font-black mb-2">
+                      Need Replacement Filters or Supplies?
+                    </h2>
+                    <p className="text-primary-foreground/70 leading-relaxed max-w-2xl">
+                      Keep your air clean between service visits. Give us a call with your filter size or system model
+                      and we'll have the right filters and supplies ready for you.
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={BUSINESS.phone.href}
+                  className="inline-flex items-center justify-center gap-2 bg-amber hover:bg-amber-light text-primary font-bold px-8 py-4 rounded-xl text-lg transition-colors flex-wrap"
+                >
+                  <Phone size={20} className="shrink-0" aria-hidden="true" />
+                  <span>Call to Order:</span>
+                  <span className="whitespace-nowrap">{BUSINESS.phone.display}</span>
+                </a>
               </div>
             </div>
           </AnimatedSection>
